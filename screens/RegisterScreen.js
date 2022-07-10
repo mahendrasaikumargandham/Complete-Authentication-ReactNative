@@ -75,7 +75,7 @@ const RegisterScreen = () => {
             >
                 <Text style = {styles.buttonText}>Register</Text>
             </TouchableOpacity> 
-            <View><Text style = {styles.new}>New to Rubix Meetings?</Text></View>
+            <View><Text style = {styles.new}>Already a member?</Text></View>
             <TouchableOpacity
                 onPress = {redirect}
                 style = {[styles.button, styles.buttonOutline]}
