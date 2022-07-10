@@ -23,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "black"
+        "backgroundColor": "#000000"
       },
       "package": "com.mahendra_4919.LoginApp"
     },
