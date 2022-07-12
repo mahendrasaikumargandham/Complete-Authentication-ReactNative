@@ -2,28 +2,35 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { db } from '../firebase/firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
 
-const setOfClasses = [
-  {
-    id: 1,
-    name: "CSE-A",
-    subject: "Machine Learning",
-  },
-  {
-    id: 2,
-    name: "CSE-B",
-    subject: "Computer Networks",
-  }
-]
 const Classes = () => {
-  const navigation = useNavigation();
 
+  let classNames = []
+  const colRef = collection(db, 'classNamesList')
+  getDocs(colRef)
+  .then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      classNames.push({ ...doc.data(), id: doc.id })
+    })
+    console.log(classNames);
+  });
+  classNames = [
+    {
+      id: "CSE",
+      subjectName: "Computer Networks"
+    }
+  ]
+
+  const navigation = useNavigation();
   const handleCreate = () => {
     navigation.navigate("Create a Class");
   }
   const handleJoin = () => {
     navigation.navigate("Join a Class");
   }
+
   return (
     <View style = {styles.container}>
       <View style = {styles.direction}>
@@ -34,11 +41,11 @@ const Classes = () => {
           <Text style = {styles.buttons}>Join Class</Text>
         </TouchableOpacity>
       </View>
-      {setOfClasses.map((clas, index) => 
+      {classNames.map((i, index) => 
         <View key = {index}>
           <TouchableOpacity style = {styles.box}>
-            <Text style = {styles.heading}>{clas.name}</Text>
-            <Text style = {styles.subject}>{clas.subject}</Text>
+            <Text style = {styles.heading}>{i.id}</Text>
+            <Text style = {styles.subject}>{i.subjectName}</Text>
           </TouchableOpacity>
         </View>
       )}

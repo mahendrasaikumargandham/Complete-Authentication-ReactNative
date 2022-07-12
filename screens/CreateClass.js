@@ -2,6 +2,8 @@ import { ScrollView, KeyboardAvoidingView, TextInput, StyleSheet, Text, View } f
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore"; 
+import { db } from '../firebase/firebase-config';
 
 const CreateClass = () => {
     const navigation = useNavigation();
@@ -9,10 +11,25 @@ const CreateClass = () => {
     const handleReturn = () => {
         navigation.navigate("Classes");
     }
-
+    
     const [className, setClassName] = useState('');
-    const [section, setSection] = useState('');
-    const [subject, setSubject] = useState('');
+    const [sectionId, setSectionId] = useState('');
+    const [subjectName, setSubjectName] = useState('');
+
+    const handleSubmit = async () => {
+        await addDoc(collection(db, "classNamesList"), {
+            className: className,
+            section: sectionId,
+            subjectName: subjectName
+        })
+        .then(() => {
+            console.log("successfull");
+        })
+        .then(() => {
+            navigation.navigate("Classes");
+        })
+        .catch((error) => console.log(error));
+    }
 
   return (
     <ScrollView>
@@ -33,15 +50,15 @@ const CreateClass = () => {
             />
             <TextInput 
                 placeholder = "Section" 
-                value = {section} 
-                onChangeText = {text => setSection(text)} 
+                value = {sectionId} 
+                onChangeText = {text => setSectionId(text)} 
                 style = {styles.input}
                 autoComplete= 'off'
             />
             <TextInput 
                 placeholder = "Subject" 
-                value = {subject} 
-                onChangeText = {text => setSubject(text)} 
+                value = {subjectName} 
+                onChangeText = {text => setSubjectName(text)} 
                 style = {styles.input}
                 autoComplete= 'off'
             />
@@ -49,6 +66,7 @@ const CreateClass = () => {
         <View style = {styles.buttonContainer}>
             <TouchableOpacity
                 style = {styles.button}
+                onPress = {handleSubmit}
             >
                 <Text style = {styles.buttonText}>Create Class</Text>
             </TouchableOpacity> 
