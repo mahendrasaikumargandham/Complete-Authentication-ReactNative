@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { ScrollView, KeyboardAvoidingView, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { authentication } from '../firebase/firebase-config';
+import { authentication } from '../../firebase/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,7 +11,7 @@ const JoinClass = () => {
     const navigation = useNavigation();
 
     const handleReturn = () => {
-        navigation.navigate("Classes");
+        navigation.navigate("Rooms");
     }
 
   return (

@@ -1,15 +1,15 @@
 import { ScrollView, KeyboardAvoidingView, TextInput, StyleSheet, Text, View } from 'react-native';
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { collection, addDoc, doc, setDoc, getDocs, getDoc } from "firebase/firestore"; 
-import { db } from '../firebase/firebase-config';
+import { authentication, db } from '../../firebase/firebase-config';
 
 const CreateClass = () => {
     const navigation = useNavigation();
 
     const handleReturn = () => {
-        navigation.navigate("Classes");
+        navigation.navigate("Rooms");
     }
     
     const [className, setClassName] = useState('');
@@ -17,7 +17,7 @@ const CreateClass = () => {
     const [subjectName, setSubjectName] = useState('');
 
     const handleSubmit = async () => {
-        await addDoc(collection(db, "classNamesList"), {
+        await addDoc(collection(db, "classRoom"), {
             className: className,
             section: sectionId,
             subjectName: subjectName
@@ -26,7 +26,7 @@ const CreateClass = () => {
             console.log("successfull");
         })
         .then(() => {
-            navigation.navigate("Classes");
+            navigation.navigate("Rooms");
         })
         .catch((error) => console.log(error));
     }

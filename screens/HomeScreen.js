@@ -5,15 +5,18 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { authentication } from '../firebase/firebase-config';
-import Materials from '../components/Materials';
-import Classes from '../components/Classes';
-import Archive from "../components/Archive";
-import Notifications from '../components/Notifications';
+import Materials from '../components/DrawNavigator/Materials';
+import Classes from '../components/DrawNavigator/Classes';
+import Archive from "../components/DrawNavigator/Archive";
+import Notifications from '../components/DrawNavigator/Notifications';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SettingsScreen from './SettingsScreen';
-import CreateClass from './CreateClass';
-import JoinClass from '../components/JoinClass';
+import CreateClass from '../components/CreateClass/CreateClass'
+import JoinClass from '../components/JoinClass/JoinClass';
+import Server from '../components/JoinClass/Server';
+import VideoConference from '../components/JoinClass/VideoConference';
+import Chat from '../components/Conference/Chat';
 
 const Drawer = createDrawerNavigator();
 
@@ -72,7 +75,7 @@ const HomeScreen = () => {
         </View>
       </Modal>
       <Drawer.Navigator useLegacyImplementation>
-        <Drawer.Screen name="Classes" component = {Classes}
+        <Drawer.Screen name="Rooms" component = {Classes}
           options={{ 
             headerTitle: () => (
              <View style = {styles.head}>
@@ -88,8 +91,11 @@ const HomeScreen = () => {
         <Drawer.Screen name="Archived" component = {Archive} />
         <Drawer.Screen name="Notifications" component = {Notifications} />
         <Drawer.Screen name="Settings" component = {SettingsScreen} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Create a Class" component = {CreateClass} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Join a Class" component = {JoinClass} />
+        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Create a Room" component = {CreateClass} />
+        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Join a Room" component = {JoinClass} />
+        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Server" component = {Server} />
+        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Chat" component = {Chat} />
+        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Meeting" component = {VideoConference} />
       </Drawer.Navigator>
     </NavigationContainer>
   )
@@ -116,6 +122,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
+    marginTop: "40%",
     backgroundColor: "white",
     borderRadius: 10,
     padding: 35,

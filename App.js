@@ -6,22 +6,28 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import SettingsScreen from "./screens/SettingsScreen";
-import CreateClass from './screens/CreateClass';
+import { useEffect } from 'react';
+import { authentication } from './firebase/firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    authentication.onAuthStateChanged(user => {
+      console.log("user >>> ", user);
+    })
+  }, [])
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen options = {{ headerShown: false }} name = "Login" component = {LoginScreen} />
-          <Stack.Screen options = {{ headerShown: false }} name = "Register" component = {RegisterScreen} />
-          <Stack.Screen options = {{ headerShown: false }} name = "ForgotPassword" component = {ForgotPassword} />
-          <Stack.Screen options = {{ headerShown: false }} name = "Home" component = {HomeScreen} />
-          <Stack.Screen name = "Settings" component = {SettingsScreen} />
-          <Stack.Screen name = "CreateClass" component = {CreateClass} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options = {{ headerShown: false }} name = "Login" component = {LoginScreen} />
+        <Stack.Screen options = {{ headerShown: false }} name = "Register" component = {RegisterScreen} />
+        <Stack.Screen options = {{ headerShown: false }} name = "ForgotPassword" component = {ForgotPassword} />
+        <Stack.Screen options = {{ headerShown: false }} name = "Home" component = {HomeScreen} />
+        {/* <Stack.Screen name = "Settings" component = {SettingsScreen} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
