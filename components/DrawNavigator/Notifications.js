@@ -3,7 +3,7 @@ import React from 'react';
 
 const Notifications = () => {
   return (
-    <View>
+    <View style = {styles.main}>
       <Text>Notifications</Text>
     </View>
   )
@@ -11,4 +11,9 @@ const Notifications = () => {
 
 export default Notifications
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  main: {
+    backgroundColor: "#0c002b",
+    height: "100%"
+  }
+})

@@ -17,7 +17,8 @@ const CreateClass = () => {
     const [subjectName, setSubjectName] = useState('');
 
     const handleSubmit = async () => {
-        await addDoc(collection(db, "classRoom"), {
+        const citiesRef = collection(db, 'users');
+        await addDoc(collection(citiesRef, authentication.currentUser?.uid, "Rooms"), {
             className: className,
             section: sectionId,
             subjectName: subjectName
@@ -32,7 +33,7 @@ const CreateClass = () => {
     }
 
   return (
-    <ScrollView>
+    <ScrollView style = {styles.main}>
         <View> 
             <Text style = {styles.rubix}>Rubix Meetings</Text>
         </View>
@@ -42,7 +43,7 @@ const CreateClass = () => {
         >
         <View style = {styles.inputContainer}>
             <TextInput 
-                placeholder = "Class Name" 
+                placeholder = "Room Name" 
                 value = {className} 
                 onChangeText = {text => setClassName(text)} 
                 style = {styles.input}
@@ -68,7 +69,7 @@ const CreateClass = () => {
                 style = {styles.button}
                 onPress = {handleSubmit}
             >
-                <Text style = {styles.buttonText}>Create Class</Text>
+                <Text style = {styles.buttonText}>Create Room</Text>
             </TouchableOpacity> 
             <TouchableOpacity onPress = {handleReturn}>
               <Text style = {styles.cancel}>Cancel</Text>
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "700",
         textAlign: 'center',
+        color: "#fff"
     },
     container: {
         flex: 1,
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        backgroundColor: '#120A8F',
+        backgroundColor: '#fff',
         width: '100%',
         paddingHorizontal: 10,
         paddingVertical: 10,
@@ -119,15 +121,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: '#0c002b',
         fontWeight: '700',
         fontSize: 16,
-    },
-    new: {
-        marginTop: 5
     },
     cancel: {
       textDecorationLine: "underline",
       marginTop: 10,
+      color: "#fff",
+    },
+    main: {
+        backgroundColor: "#0c002b"
     }
 })

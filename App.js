@@ -5,31 +5,28 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPassword from './screens/ForgotPassword';
-import SettingsScreen from "./screens/SettingsScreen";
-import { useEffect } from 'react';
 import { authentication } from './firebase/firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
+import { StateProvider } from './StateProvider';
+import Meeting from './screens/Meeting';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
-  useEffect(() => {
-    authentication.onAuthStateChanged(user => {
-      console.log("user >>> ", user);
-    })
-  }, [])
+const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent = {true}>
       <Stack.Navigator>
         <Stack.Screen options = {{ headerShown: false }} name = "Login" component = {LoginScreen} />
         <Stack.Screen options = {{ headerShown: false }} name = "Register" component = {RegisterScreen} />
         <Stack.Screen options = {{ headerShown: false }} name = "ForgotPassword" component = {ForgotPassword} />
         <Stack.Screen options = {{ headerShown: false }} name = "Home" component = {HomeScreen} />
-        {/* <Stack.Screen name = "Settings" component = {SettingsScreen} /> */}
+        <Stack.Screen name = "Meeting" component = {Meeting} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {

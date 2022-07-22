@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     }
     const [email, setEmail] = useState('');
   return (
-    <ScrollView>
+    <ScrollView style = {styles.main}>
         <View> 
             <Text style = {styles.rubix}>Rubix Meetings</Text>
         </View>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "700",
         textAlign: 'center',
+        color: "#fff"
     },
     container: {
         flex: 1,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: '#fff',
         width: '100%',
         paddingHorizontal: 10,
         paddingVertical: 10,
@@ -91,27 +92,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonOutline: {
-        backgroundColor: '#fff',
+        backgroundColor: '#0c002b',
         marginTop: 20,
         padding: 10,
-        borderColor: 'blue',
+        borderColor: '#fff',
         borderWidth: 2,
     },
     buttonText: {
-        color: '#fff',
+        color: '#0c002b',
         fontWeight: '700',
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: 'blue',
+        color: '#fff',
         fontWeight: '700',
         fontSize: 16,
     },
-    forgot: {
-        marginBottom: 10,
-        textDecorationLine: "underline",
-    },
     new: {
-        marginTop: 15
+        marginTop: 15,
+        color: "#fff"
+    }, 
+    main: {
+        backgroundColor: "#0c002b"
     }
 })

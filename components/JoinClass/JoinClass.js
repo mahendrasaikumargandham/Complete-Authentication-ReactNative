@@ -15,7 +15,7 @@ const JoinClass = () => {
     }
 
   return (
-    <ScrollView>
+    <ScrollView style = {styles.main}>
         <View> 
             <Text style = {styles.rubix}>Rubix Meetings</Text>
         </View>
@@ -25,7 +25,7 @@ const JoinClass = () => {
     >
       <View style = {styles.inputContainer}>
         <TextInput 
-            placeholder = "Class Code" 
+            placeholder = "Room Code" 
             value = {join} 
             autoComplete= 'off'
             onChangeText = {text => setJoin(text)} 
@@ -36,7 +36,7 @@ const JoinClass = () => {
         <TouchableOpacity
             style = {styles.button}
         >
-            <Text style = {styles.buttonText}>Join Class</Text>
+            <Text style = {styles.buttonText}>Join Room</Text>
         </TouchableOpacity> 
         <TouchableOpacity onPress = {handleReturn}>
             <Text style = {styles.cancel}>Cancel</Text>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "700",
         textAlign: 'center',
+        color: "#fff"
     },
     container: {
         flex: 1,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        backgroundColor: '#120A8F',
+        backgroundColor: '#fff',
         width: '100%',
         paddingHorizontal: 10,
         paddingVertical: 10,
@@ -87,15 +88,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: '#0c002b',
         fontWeight: '700',
         fontSize: 16,
-    },
-    new: {
-        marginTop: 5
     },
     cancel: {
         textDecorationLine: "underline",
         marginTop: 10,
+        color: "#fff"
+    },
+    main: {
+        backgroundColor: "#0c002b"
     }
 })

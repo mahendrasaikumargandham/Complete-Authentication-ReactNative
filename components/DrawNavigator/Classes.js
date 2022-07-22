@@ -2,23 +2,23 @@ import { Modal, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { db } from '../../firebase/firebase-config';
-import { collection, getDocs } from 'firebase/firestore';
+import { authentication, db } from '../../firebase/firebase-config';
+import { collection, getDocs, getDoc, doc, collectionGroup, query, where, orderBy } from 'firebase/firestore';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { ScrollView } from 'react-native-gesture-handler';
 
 const Classes = () => {
 
   const [info, setInfo] = useState([]);
-  const colRef = collection(db, 'classRoom')
+  const colRef = query(collectionGroup(db, 'Rooms'));
   getDocs(colRef)
   .then((snapshot) => {
-    snapshot.docs.forEach((doc) => {
+    snapshot.docs.map((doc) => {
       info.push({ ...doc.data(), id: doc.id })
     })
-    console.log(info[4]);
+    console.log(info);
+    console.log(authentication.currentUser?.displayName);
   });
-
   const navigation = useNavigation();
 
   const handleCreate = () => {
@@ -37,7 +37,7 @@ const Classes = () => {
 
   }
   return (
-    <ScrollView>
+    <ScrollView style = {styles.main}>
       <View sty = {styles.container}>
         <View style = {styles.direction}>
           <TouchableOpacity onPress = {handleCreate}>
@@ -47,16 +47,36 @@ const Classes = () => {
             <Text style = {styles.buttons}>Join Room</Text>
           </TouchableOpacity>
         </View>
-        {/* {info.map((each, index = 0) =>  )} */}
-          <View>
+        {info.map((each, index) =>
+          <View key = {index}>
+          <TouchableOpacity 
+            style = {styles.box}
+            onPress = {handleRedirect}
+          >
+            <View style = {styles.view}>
+              <Text style = {styles.heading}>{each.className} {each.section}</Text>
+              <Text>
+                <TouchableOpacity 
+                  onPress = {addToArchive}
+                >
+                  <MaterialIcons style = {styles.icon} name = "more-vert" size = {30} />
+                </TouchableOpacity>
+              </Text>
+            </View>
+            <Text style = {styles.subject}>
+              {each.subjectName}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+       )}
+       <View>
             <TouchableOpacity 
               style = {styles.box}
               onPress = {handleRedirect}
             >
               <View style = {styles.view}>
-                <Text style = {styles.heading}>
-                  CSE A
-                </Text>
+                <Text style = {styles.heading}>ClassName section</Text>
                 <Text>
                   <TouchableOpacity 
                     onPress = {addToArchive}
@@ -66,35 +86,10 @@ const Classes = () => {
                 </Text>
               </View>
               <Text style = {styles.subject}>
-                Data Structures
+                SubjectName
               </Text>
             </TouchableOpacity>
           </View>
-
-          <View>
-            <TouchableOpacity 
-              style = {styles.box}
-              onPress = {handleRedirect}
-            >
-              <View style = {styles.view}>
-                <Text style = {styles.heading}>
-                  CSE B
-                </Text>
-                <Text>
-                  <TouchableOpacity 
-                    onPress = {addToArchive}
-                  >
-                    <MaterialIcons style = {styles.icon} name = "more-vert" size = {30} />
-                  </TouchableOpacity>
-                </Text>
-              </View>
-              <Text style = {styles.subject}>
-                Computer Networks
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-        {/* )} */}
       </View>
     </ScrollView>
   )
@@ -108,12 +103,10 @@ const styles = StyleSheet.create({
     color: "black"
   },
   box: {
-    backgroundColor: "#120A8F",
+    backgroundColor: "rgb(0, 89, 178)",
     padding: 15,
     margin: 10,
-    borderRadius: 20,
-    borderColor: 'blue',
-    borderWidth: 3,
+    borderRadius: 10,
   },
   heading: {
     fontSize: 25,
@@ -132,12 +125,12 @@ const styles = StyleSheet.create({
   },
   buttons: {
     backgroundColor: "#fff",
-    color: "#120A8F",
+    color: "#0c002b",
     fontWeight: "800",
     padding: 10,
     margin: 10,
     fontSize: 17,
-    borderColor: "#120A8F",
+    // borderColor: "#fff",
     borderWidth: 3,
     borderRadius: 10,
   },
@@ -168,5 +161,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  main: {
+    backgroundColor: "#0c002b"
   }
 })

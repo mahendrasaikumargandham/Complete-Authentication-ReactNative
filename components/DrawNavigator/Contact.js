@@ -2,40 +2,15 @@ import { ScrollView, KeyboardAvoidingView, TextInput, StyleSheet, Text, View } f
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { authentication } from '../firebase/firebase-config';
 
-const RegisterScreen = () => {
+const Contact = () => {
     const navigation = useNavigation();
-
-    const redirect = () => {
-        navigation.replace("Login");
-    }
     
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [number, setNumber] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        const unsubscribe = authentication.onAuthStateChanged(user => {
-            if(user) {
-                navigation.replace("Home")
-            }
-        })
-        return unsubscribe;
-    }, []);
-
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(authentication, email, password)
-        .then(() => updateProfile(authentication.currentUser, {
-                displayName: name,
-            }),
-            (userCredential) => {
-            const user = userCredential.user;
-            console.log('registered with', user.displayName);
-            console.log('Registered with ',user.email); 
-        }).catch(error => alert(error.message));
-    };
   return (
     <ScrollView style = {styles.main}>
         <View> 
@@ -61,35 +36,35 @@ const RegisterScreen = () => {
                 autoComplete= 'off'
             />
             <TextInput 
-                placeholder = "Password" 
-                value = {password} 
-                onChangeText = {text => setPassword(text)} 
+                placeholder = "Phone" 
+                value = {number} 
+                onChangeText = {text => setNumber(text)} 
                 style = {styles.input}
                 autoComplete= 'off'
-                secureTextEntry
+            />
+            <TextInput 
+                placeholder = "Message" 
+                value = {password} 
+                onChangeText = {text => setPassword(text)} 
+                style = {styles.message}
+                autoComplete= 'off'
+                multiline = {true}
             />
         </View>
         <View style = {styles.buttonContainer}>
             <TouchableOpacity
-                onPress = {handleSignUp}
+                // onPress = {handleSignUp}
                 style = {styles.button}
             >
-                <Text style = {styles.buttonText}>Register</Text>
+                <Text style = {styles.buttonText}>Contact</Text>
             </TouchableOpacity> 
-            <View><Text style = {styles.new}>Already a member?</Text></View>
-            <TouchableOpacity
-                onPress = {redirect}
-                style = {[styles.button, styles.buttonOutline]}
-            >
-                <Text style = {styles.buttonOutlineText}>Login</Text>
-            </TouchableOpacity>
         </View>
         </KeyboardAvoidingView>
     </ScrollView>
   )
 }
 
-export default RegisterScreen
+export default Contact
 
 const styles = StyleSheet.create({
     rubix: {
@@ -104,6 +79,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '10%',
+    },
+    message: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 10,
+        height: 100,
+        
     },
     inputContainer: {
         width: '80%',

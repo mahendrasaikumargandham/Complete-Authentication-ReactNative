@@ -1,5 +1,5 @@
-import { Modal, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 import 'react-native-gesture-handler';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,95 +9,121 @@ import Materials from '../components/DrawNavigator/Materials';
 import Classes from '../components/DrawNavigator/Classes';
 import Archive from "../components/DrawNavigator/Archive";
 import Notifications from '../components/DrawNavigator/Notifications';
-import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import SettingsScreen from './SettingsScreen';
 import CreateClass from '../components/CreateClass/CreateClass'
 import JoinClass from '../components/JoinClass/JoinClass';
-import Server from '../components/JoinClass/Server';
-import VideoConference from '../components/JoinClass/VideoConference';
+import Server from '../components/Server';
+import VideoConference from '../components/VideoConference';
 import Chat from '../components/Conference/Chat';
+import Profile from '../components/Profile';
+import DashBoard from '../components/DashBoard';
+import Meeting from './Meeting';
+import StartMeeting from '../components/StartMeeting';
+import CustomDraw from '../components/CustomDraw';
+import Settings from '../components/DrawNavigator/Settings';
+import About from '../components/DrawNavigator/About';
+import Contact from '../components/DrawNavigator/Contact';
 
 const Drawer = createDrawerNavigator();
 
 const HomeScreen = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
-
-  const signOut = () => {
-    authentication
-    .signOut()
-    .then(() => {
-      navigation.replace("Login");
-    })
-    .catch(error => alert(error.message));
-  }
-
   return (
-    <NavigationContainer independent = {true}>
-      <Modal
-        animationType = "slide"
-        transparent = {true}
-        visible = {modalVisible}
-        onRequestClose = {() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style = {styles.centeredView}>
-          <View style = {styles.modalView}>
-            <View>
-              <MaterialIcons style = {{color: "#120A8F"}} name = "account-circle" size = {100} />
-            </View>
-            <View>
-              <Text style = {{textAlign: "center", color: "#120A8F", fontSize: 20, fontWeight: "700"}}>
-                {authentication.currentUser?.displayName}
-              </Text>
-              <Text style = {{ color: "#120A8F" }}>{authentication.currentUser?.email}</Text>
-            </View>
-            <View>
-              <TouchableOpacity>
-                <Text style = {{marginTop: 10, textDecorationLine: "underline", color: "blue"}}>Visit Profile</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity onPress = {signOut}>
-              <Text style={styles.modalText}>Logout!</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>
-                <MaterialIcons style = {{ color: "#120A8F"}} name = "clear" size = {30} />
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <Drawer.Navigator useLegacyImplementation>
-        <Drawer.Screen name="Rooms" component = {Classes}
-          options={{ 
-            headerTitle: () => (
-             <View style = {styles.head}>
-                <Text style = {styles.heading}>Rubix Meetings                    </Text>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                  <MaterialIcons name="account-circle" size = {45} />
-                </TouchableOpacity>
-             </View>
-            )}
-          }
+    <Drawer.Navigator 
+      useLegacyImplementation
+      screenOptions = {{
+        drawerActiveBackgroundColor: "#fff",
+        drawerActiveTintColor: "#0c002b",
+        drawerInactiveTintColor: "#fff",
+        headerTintColor: "#fff",
+        headerStyle: {
+          backgroundColor: "#0c002b",
+        },
+        drawerLabelStyle : {
+          marginLeft: -20
+        }
+      }}
+      drawerContent = {(props) => <CustomDraw {...props} />} 
+    >
+        <Drawer.Screen 
+          name="DashBoard" 
+          component = {DashBoard}
+          options = {{
+            drawerIcon: ({color}) => (
+              <MaterialIcons name = "dashboard" size = {30} color = {color} />
+            )
+          }}
         />
-        <Drawer.Screen name="Materials" component = {Materials} />
-        <Drawer.Screen name="Archived" component = {Archive} />
-        <Drawer.Screen name="Notifications" component = {Notifications} />
-        <Drawer.Screen name="Settings" component = {SettingsScreen} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Create a Room" component = {CreateClass} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Join a Room" component = {JoinClass} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Server" component = {Server} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Chat" component = {Chat} />
-        <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Meeting" component = {VideoConference} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+        <Drawer.Screen 
+          name="Rooms" 
+          component = {Classes} 
+          options = {{
+            drawerIcon: ({color}) => (
+              <MaterialIcons name = "groups" size = {30} color = {color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Materials" 
+          component = {Materials}
+          options = {{
+            drawerIcon: ({color}) => (
+              <MaterialIcons name = "menu-book" size = {30} color = {color} />
+            )
+          }} 
+        />
+        <Drawer.Screen 
+          name="Archived" 
+          component = {Archive} 
+          options = {{
+            drawerIcon: ({color}) => (
+              <MaterialIcons name = "archive" size = {30} color = {color} />
+            )
+          }}
+        />
+        <Drawer.Screen 
+          name="Notifications" 
+          component = {Notifications} 
+          options = {{
+            drawerIcon: ({color}) => (
+              <MaterialIcons name = "notifications" size = {30} color = {color} />
+            )
+          }}
+        />
+      <Drawer.Screen 
+        name="Settings" 
+        component = {Settings} 
+        options = {{
+          drawerIcon: ({color}) => (
+            <MaterialIcons name = "settings" size = {30} color = {color} />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="About" 
+        component = {About} 
+        options = {{
+          drawerIcon: ({color}) => (
+            <MaterialIcons name = "contacts" size = {30} color = {color} />
+          )
+        }}
+      />
+      <Drawer.Screen 
+        name="Contact" 
+        component = {Contact} 
+        options = {{
+          drawerIcon: ({color}) => (
+            <MaterialIcons name = "mail" size = {30} color = {color} />
+          )
+        }}
+      />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Profile" component = {Profile} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Create a Room" component = {CreateClass} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Join a Room" component = {JoinClass} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Server" component = {Server} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Chat" component = {Chat} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="VideoConference" component = {VideoConference} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Emergency Meeting" component = {Meeting} />
+      <Drawer.Screen options={{drawerItemStyle: { height: 0 }}} name="Start Meeting" component = {StartMeeting} />
+    </Drawer.Navigator>
   )
 }
 
@@ -123,8 +149,8 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     marginTop: "40%",
-    backgroundColor: "white",
-    borderRadius: 10,
+    backgroundColor: "#120A8F",
+    borderRadius: 5,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
@@ -144,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     color: "#120A8F",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     borderColor: "#120A8F",
     borderWidth: 3,
     fontWeight: "800",

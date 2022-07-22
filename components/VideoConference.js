@@ -20,6 +20,9 @@ const VideoConference = () => {
         <View style = {styles.videoContainer}>
             <Camera type = {"front"} style = {styles.camera}></Camera>
         </View>
+        {/* <Modal>
+
+        </Modal> */}
         <View style = {styles.align}>
             <TouchableOpacity>
                 <MaterialIcons name = "mic" size = {35} color = "white" />

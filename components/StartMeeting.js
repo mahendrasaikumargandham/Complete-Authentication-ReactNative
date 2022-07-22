@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const SettingsScreen = ({navigation}) => {
+const StartMeeting = () => {
   return (
     <View>
-      <Text>SettingsScreen</Text>
+      <Text>StartMeeting</Text>
     </View>
   )
 }
 
-export default SettingsScreen
+export default StartMeeting
 
 const styles = StyleSheet.create({})
