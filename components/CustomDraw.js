@@ -21,7 +21,7 @@ const CustomDraw = (props) => {
     navigation.navigate("Profile");
   }
   return (
-    <ScrollView>
+    <ScrollView style = {{backgroundColor: "#0c002b", height: "100%"}}>
       <View style = {{flex: 1}}>
         <DrawerContentScrollView 
           {...props} 
